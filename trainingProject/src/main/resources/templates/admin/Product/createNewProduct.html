@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>createNewTypeOf</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+
+    <style>
+        body {
+            background-color: #FFE4E1; /* Устанавливаем фон розового цвета */
+            display: flex; /* Используем flexbox для центрирования */
+            justify-content: center; /* Центрируем по горизонтали */
+            align-items: center; /* Центрируем по вертикали */
+            height: 100vh; /* Высота на весь экран */
+            margin: 0; /* Убираем отступы */
+        }
+
+        .square {
+            width: 500px; /* Ширина квадрата */
+            height: 500px; /* Высота квадрата */
+            background-color: white; /* Цвет квадрата */
+            border-radius: 25px; /* Округленные края */
+            display: flex; /* Используем flexbox для центрирования содержимого */
+            flex-direction: column; /* Располагаем элементы по вертикали */
+            justify-content: center; /* Центрируем содержимое по вертикали */
+            align-items: center; /* Центрируем содержимое по горизонтали */
+    		
+        }
+
+        form {
+            width: 100%; /* Ширина формы на весь контейнер */
+            text-align: center; /* Центрируем текст внутри формы */
+        }
+
+        input[type="text"] {
+            width: 50%; /* Ширина текстового поля */
+            padding: 10px; /* Отступы внутри текстового поля */
+            margin: 10px 0; /* Отступы сверху и снизу */
+            border-radius: 10px; /* Округленные края */
+            text-align: center;
+
+        }
+
+        input[type="submit"] {
+            padding: 10px; /* Отступы внутри кнопки */
+            font-size: 20px; /* Размер шрифта кнопки */
+            border-radius: 10px; /* Округленные края */
+            width:100px;
+            height:40px;
+            font-weight: bold; 
+            cursor:pointer;
+        }
+        input[type=file]::file-selector-button {
+		    margin-right: 20px;
+		    border: none;
+		    background: #084cdf; /* Основной цвет фона */
+		    padding: 12px 24px; /* Увеличенные отступы для лучшего восприятия */
+		    border-radius: 10px; /* Скругленные углы */
+		    color: #fff; /* Цвет текста */
+		    font-size: 16px; /* Увеличенный размер шрифта */
+		    cursor: pointer; /* Указатель для курсора */
+		    transition: background 0.2s ease-in-out, transform 0.2s; /* Плавный переход для фона и эффекта нажатия */
+		}
+		
+		input[type=file]::file-selector-button:hover {
+		    background: #0d45a5; /* Более темный синий при наведении */
+		    transform: translateY(-2px); /* Легкий подъем кнопки при наведении */
+		}
+		
+		input[type=file]::file-selector-button:active {
+		    transform: translateY(0); /* Возврат кнопки в исходное положение при нажатии */
+		}
+		
+    </style>
+</head>
+<body>
+    <div class="square">
+        <form th:method="POST" th:action="@{/admin/Product/create}" th:object="${ProductModel}" enctype="multipart/form-data">
+            <h2><label th:text="'new product in '+${category}"></label></h2>
+            <label>name</label>
+            
+            <input type="text" th:field="*{name}"/>
+            <br>
+            <label>cost </label>
+             <!-- Скрытое поле для fk_TypeOf_Id -->
+    		<input type="hidden" th:field="*{fk_TypeOf_Id}" />	
+            <input type="text" th:field="*{cost}"/>
+            <br>
+            <label>text </label>
+            <input type="text" th:field="*{text}"/>
+            <br>
+            <input type="file" name="fileImage" id="fileImage" accept=".jpg, .jpeg, .png" required/>
+            <br>
+            <input type="submit" value="create"/>
+            <br>
+        </form>
+        <br>
+        <form th:action="@{/admin/{category}(category=${category})}">
+   			<input type="submit" value="back" />
+		</form>
+        
+    </div>
+</body>
+</html>

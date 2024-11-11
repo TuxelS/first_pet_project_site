@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<title>TASTE CORNER</title>
+ <link rel="icon" href="/img/iconImg.png" type="image/png">
+<link th:href="@{/css/NewMainPage.css}" rel="stylesheet"/>
+<style>
+	html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+	
+	<header>
+		<div class="left-side">
+			<a href="https://yandex.ru/maps/16/yaroslavl/?l=sat%2Cskl&ll=39.850769%2C57.637314&mode=poi&poi%5Bpoint%5D=39.850575%2C57.637336&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D135143368090&z=18">
+				<img src = "/img/placeholder1.png" alt =""/>
+				<div class="text">
+					Ярославль
+				</div>
+			</a>
+			
+			<div class="text">
+				&#9990
+				8-800-555-35-35
+			</div>
+		</div>
+		
+		
+		<div class="right-side">
+			<div class="text"> TASTE CORNER </div>
+			<ul>
+				<li>
+					<a th:href = "@{/fabric}">
+					<img src="/img/mainIcon.png" alt="" />
+						<ul>
+							<li><a th:href = "@{/fabric}">Домой</a> </li>
+							<li><a th:href="@{/fabric/menu}">Меню</a> </li>
+						</ul>
+					</a>
+				</li>
+			</ul>
+		</div>	
+	</header>
+	
+		<section>
+			<div class="container">
+				<div class="left-bar"></div>
+				
+				
+				<div class="middle-bar1" id="Все">
+					<!-- панель для кнопок-якорей -->
+					<div class="areaForButtons" >
+						<div class="button-href">
+							<a href="#Все" >Все</a>
+						</div>
+						<tr th:each="entry:${productMap}">
+						<div class="button-href">
+							<a th:href="${'#'+entry.key.name}" th:text="${entry.key.name}"></a>
+						</div>
+						</tr>
+					</div>
+					
+					<!-- двойной цикл, сначала берем название - категорию, потом берем блюда из этой категории -->
+					<tr th:each="entry : ${productMap}" >
+            		<div class="blockWithCategory" th:id="${entry.key.name}">
+            			<b> <td th:text="${entry.key.name}" ></td> </b>
+            		</div>
+            			<div class="blockForMenu">
+	            			<td>
+	            			
+	               				 <div class = "elem" th:each="product : ${entry.value}">
+	               				 
+	               				 	<img th:src="@{${'/img/dishes/'+product.photo_url}}" alt=""/>
+	                    			<b><div class="name" th:text="${product.name}"></div></b>
+	                    			<div class = "text" th:text="${product.text}"></div> 
+	                    			<b><div class="cost" th:text="${product.cost}+' &#8381;'"></div></b>
+	                    			
+	                			</div>
+	                		
+	            			</td>
+            			</div>
+            			
+       					</tr>
+						
+				</div>
+				
+				
+				<div class="right-bar"></div>
+				
+			</div>
+			
+		</section>
+	
+	<footer>
+		<div class="bottomArea"></div>
+	</footer>
+
+</body>
+</html>

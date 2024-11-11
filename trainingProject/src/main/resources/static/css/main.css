@@ -1,0 +1,101 @@
+@charset "UTF-8";
+a {
+	
+    color:black; 
+    font-size: 50px; 
+    text-decoration:none
+}
+
+a:hover {
+    font-weight: bold; 
+    color:black; 
+    font-size: 50px; 
+    
+}
+
+.divmargin{
+	margin-top:50px;
+	margin-bottom:50px;
+	
+}
+
+
+.wrapper{
+	display:grid;
+	grid-template-columns:1fr 5fr;
+	grid-gap:1em;
+	height:100vh;
+	
+}
+
+.wrapper > div.light{
+	background-color:pink;
+	margin-top:50px;
+	margin-bottom:50px;
+	text-align: center;
+}
+
+.wrapper>div.light>div.window{
+	background-color:white;
+	margin-top:50px;
+	margin-bottom:50px;
+	text-align: center;
+	width:80%;
+	height:200px;
+	justify-self: center; /* Центрирование по горизонтали */
+	border-radius: 30px; /* Закругленные углы */
+}
+
+
+.wrapper > div.column{
+	display:grid;
+	grid-template-columns: 1fr 1fr; /* Сетка из 2 колонок */
+    gap: 50px; /* Отступ между элементами сетки */
+}
+
+.wrapper > div.column > div.setk{
+	background-color:white;
+	gap:50px;
+	width: 450px; /* Ширина элемента */
+    height: 450px; /* Высота элемента */
+    justify-self: center; /* Центрирование по горизонтали */
+    align-self: center; /* Центрирование по вертикали */
+    border-radius: 15px;
+    text-align: center; /* Центрируем текст */
+    align-content: end;
+}
+
+.setk img{
+	width:350px;
+	height:350px;
+	border-radius: 15px; /* Скругление углов */
+}
+.container {
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center; /* Центрирование по вертикали */
+    height: 100vh; /* Высота контейнера */
+    margin-top:50px;
+	margin-bottom:50px;
+}
+
+.custom-button {
+    width: 450px; /* Ширина элемента */
+    height: 450px; /* Высота элемента */
+    font-size: 20px; /* Новый размер шрифта */
+    background-color: white; /* Цвет фона */
+    padding: 10px 10px; /* Отступы */
+    border-radius: 30px; /* Закругленные углы */
+    align-self: center;
+    justify-self: center;
+}
+
+.custom-button>.oneSetting{
+	display:flex;
+	height:8em;
+	align-self: center;
+    justify-self: center;
+   
+    
+}
+

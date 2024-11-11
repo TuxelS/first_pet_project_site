@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>deleteProduct</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+
+  <style>
+        body {
+            background-color: #FFE4E1; /* Устанавливаем фон розового цвета */
+            display: flex; /* Используем flexbox для центрирования */
+            justify-content: center; /* Центрируем по горизонтали */
+            align-items: center; /* Центрируем по вертикали */
+            height: 100vh; /* Высота на весь экран */
+            margin: 0; /* Убираем отступы */
+        }
+
+        .square {
+            width: 500px; /* Ширина квадрата */
+            height: 500px; /* Высота квадрата */
+            background-color: white; /* Цвет квадрата */
+            border-radius: 25px; /* Округленные края */
+            display: flex; /* Используем flexbox для центрирования содержимого */
+            flex-direction: column; /* Располагаем элементы по вертикали */
+            justify-content: center; /* Центрируем содержимое по вертикали */
+            align-items: center; /* Центрируем содержимое по горизонтали */
+        }
+
+        form {
+            width: 100%; /* Ширина формы на весь контейнер */
+            text-align: center; /* Центрируем текст внутри формы */
+        }
+
+        input[type="text"] {
+            width: 50%; /* Ширина текстового поля */
+            padding: 10px; /* Отступы внутри текстового поля */
+            margin: 10px 0; /* Отступы сверху и снизу */
+            border-radius: 10px; /* Округленные края */
+            text-align: center;
+        }
+
+        input[type="submit"] {
+            padding: 10px; /* Отступы внутри кнопки */
+            font-size: 20px; /* Размер шрифта кнопки */
+            border-radius: 10px; /* Округленные края */
+            width:100px;
+            height:40px;
+            font-weight: bold; 
+            cursor:pointer;
+        }
+        
+        select{
+	        width: 200px; /* Ширина элемента */
+	    	height: 40px; /* Высота элемента */
+	   		border: 2px solid black; /* Черная рамка */
+	    	border-radius: 20px; /* Закругленные углы */
+	    	padding: 5px; /* Отступы внутри элемента */
+	    	font-size: 16px; /* Размер шрифта */
+	    	background-color: white; /* Цвет фона */
+	    	text-align: center;
+        }
+        option{
+        	padding: 10px; /* Отступы внутри опций */
+    		font-size: 16px; /* Размер шрифта опций */
+    		font-weight: bold; 
+    		text-align: center;
+        }
+        </style>
+</head>
+<body>
+    <div class="square">
+        <form th:method="DELETE" th:action="@{/admin/Product/delete}" th:object="${Product}">
+            <label><h2>Select the category u wanna delete</h2></label>
+            <select th:field="*{id}">
+            	<option th:each="element : ${listOfCategory}" th:value="${element.getId()}" th:text="${element.getName()}"></option>
+            </select>
+            <h2></h2>
+            <br>
+            <input type="submit" value="delete"/>
+        </form>
+        <br>
+        <form th:action="@{/admin/{category}(category=${category})}">
+   			<input type="submit" value="back" />
+		</form>
+    </div>
+</body>
+</html>
