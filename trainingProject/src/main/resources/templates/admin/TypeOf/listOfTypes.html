@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>createNewTypeOf</title>
+    <title>listOfTypes</title>
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
 
     <style>
@@ -24,6 +24,7 @@
             flex-direction: column; /* Располагаем элементы по вертикали */
             justify-content: center; /* Центрируем содержимое по вертикали */
             align-items: center; /* Центрируем содержимое по горизонтали */
+            overflow: auto;  /* Включите вертикальную прокрутку */
     		
         }
 
@@ -75,27 +76,13 @@
 </head>
 <body>
     <div class="square">
-        <form th:method="POST" th:action="@{/admin/Product/create}" th:object="${Product}" enctype="multipart/form-data">
-            <h2><label th:text="'new product in '+${category}"></label></h2>
-            <label>name</label>
-            
-            <input type="text" th:field="*{name}"/>
-            <br>
-            <label>cost </label>
-            <input type="text" th:field="*{cost}"/>
-            <br>
-            <label>text </label>
-            <input type="text" th:field="*{description}"/>
-            <br>
-            <input type="file" name="fileImage" id="fileImage" accept=".jpg, .jpeg, .png" required/>
-            <br>
-            <input type="submit" value="create"/>
-            <br>
-        </form>
+    	<h2>Choose the type u wanna edit</h2>
+        <tr th:each="element : ${allList}">
+        	<td>
+        		<a th:href="@{editTypeOf/{id}(id=${element.id})}" th:text="${element.name}"></a>
+        	</td>
         <br>
-        <form th:action="@{/admin/{category}(category=${category})}">
-   			<input type="submit" value="back" />
-		</form>
+        </tr>
         
     </div>
 </body>

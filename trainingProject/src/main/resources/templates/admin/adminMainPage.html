@@ -20,7 +20,7 @@
 			<div> <a th:href ="@{/admin}" th:text = "HomePage" ></a></div>
 			<tr th:each ="element : ${ListOfType}">
 			<div class="divmargin">
-				<a th:href ="@{admin/{category}(category=${element.category})}" th:text = "${element.category}" ></a>
+				<a th:href ="@{admin/{category}(category=${element.category})}" th:text = "${element.name}" ></a>
 			</div>	
 			</tr>
 		</div>

@@ -72,7 +72,7 @@
         <form th:method="DELETE" th:action="@{/admin/Product/delete}" th:object="${Product}">
             <label><h2>Select the category u wanna delete</h2></label>
             <select th:field="*{id}">
-            	<option th:each="element : ${listOfCategory}" th:value="${element.getId()}" th:text="${element.getName()}"></option>
+            	<option th:each="element : ${listOfCategory}" th:value="${element.id}" th:text="${element.name}"></option>
             </select>
             <h2></h2>
             <br>

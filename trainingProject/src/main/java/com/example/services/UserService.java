@@ -4,59 +4,57 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import org.hibernate.validator.internal.util.privilegedactions.NewInstance;
+import javax.lang.model.element.Element;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.models.ProductModel;
-import com.example.models.TypeOfModel;
+import com.example.entities.Product;
+import com.example.entities.Type;
 import com.example.repositories.ProductDAO;
-import com.example.repositories.TypeOfDAO;
+import com.example.repositories.TypeDAO;
+
 
 @Service
 public class UserService {
-	private TypeOfDAO typeOfDAO;
+	private TypeDAO typeDAO;
 	private ProductDAO productDAO;
 	private String uploadDir = "src/main/resources/static/img/dishes/";
-	public UserService(TypeOfDAO typeOfDAO, ProductDAO productDAO)
+	public UserService(TypeDAO typeDAO, ProductDAO productDAO)
 	{
-		this.typeOfDAO=typeOfDAO;
+		this.typeDAO=typeDAO;
 		this.productDAO=productDAO;
 	}
-	public List<TypeOfModel> allList() 
+	public List<Type> allList() 
 	{
-		return typeOfDAO.allCategories();
+		return typeDAO.allTypes();
 	}
 	
-	public List<ProductModel> insideCategory(String category) {
-		List<ProductModel> definiteCategoryList;
-		definiteCategoryList = productDAO.getListOfAllProducts()  //подстраиваемся под конкретную категорию
-			.stream()
-			.filter(product->
-						product.getFk_TypeOf_Id().equals(typeOfDAO.getIdOfCategory(category).getId()))  //getIdOfCategory returns definite Id of arg:category in table [TypeOf]
-			.collect(Collectors.toList());
-		return definiteCategoryList;
+	public List<Product> insideCategory(String category) {
+		return productDAO.getDefiniteProducts(category);
 	}
-	public void saveNewTypeOf(TypeOfModel typeOfModel) {
-		typeOfDAO.create(typeOfModel);
-	}
-	public void editTypeOf(TypeOfModel typeOfModel) {
-		
-		typeOfDAO.editTypeOf(typeOfModel);
+	public void createType(Type type) {
+		System.out.println("UserService: void createType вход");
+		typeDAO.create(type);
 		
 	}
-	public void deleteTypeOf(TypeOfModel typeOfModel) {
-		typeOfDAO.deleteTypeOf(typeOfModel);
+	public void editType(Type type) {
+		
+		typeDAO.edit(type);
+		
+	}
+	public void deleteType(Type type) {
+		typeDAO.delete(type);
 	}
 	
-	public void getProductWithRightIdOfCategory(ProductModel productModel, String category)
-	{
-		productModel.setFk_TypeOf_Id(typeOfDAO.getIdOfCategory(category).getId());
+	public Type getTypeById(Integer id){
+		return typeDAO.getProductById(id);	
 	}
 	
-	 public void saveProductModel(ProductModel productModel, MultipartFile file) throws IOException {
+	
+	 public void saveProduct(Product product, MultipartFile file) throws IOException {
 	       	//служебная логика
 		 	// Укажите правильный путь к директории
 		    File directory = new File(uploadDir);
@@ -72,8 +70,7 @@ public class UserService {
 		    File imageFile = new File(uploadDir + file.getOriginalFilename());
 		    try {
 		        file.transferTo(imageFile.toPath());
-		        productModel.setPhoto_url(file.getOriginalFilename().toString()); // Путь для доступа к изображению
-		        productModel.setId(productDAO.maxId() + 1);
+		        product.setPhotoUrl(file.getOriginalFilename().toString()); // Путь для доступа к изображению
 		    } catch (IllegalStateException e) {
 		        System.err.println("IllegalStateException: " + e.getMessage());
 		        e.printStackTrace();
@@ -82,41 +79,53 @@ public class UserService {
 		        e.printStackTrace();
 		    }
 		    //сохраняем в бд
-		    productDAO.saveProductToDB(productModel);
+		    productDAO.saveProduct(product,getDefiniteCategory());
 		 	      
 	 }
 	 
-	 public void deleteProduct(ProductModel productModel)
+	 public void deleteProduct(Product product)
 	 {
 		 //служебная логика
 		 //удаление файла картинки
 		 
 		 try {
-			Files.deleteIfExists((new File(uploadDir+productDAO.getPhoto_urlFromId(productModel)).toPath()));
-			productDAO.deleteProduct(productModel);
+			Files.deleteIfExists((new File(uploadDir+productDAO.getProductById(product.getId()).getPhotoUrl()).toPath()));
+			productDAO.deleteProduct(product);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		 
 	 }
 
-	public ProductModel getProductWithId(Integer id)
+	public Product getProductById(Integer id)
 	{
-		return productDAO.getProductWithId(id);
+		return productDAO.getProductById(id);
 		
 	}
-	public void editProduct(ProductModel oldProduct, ProductModel newProduct, MultipartFile multipartFile) throws IOException {
+	public void editProduct(Product oldProduct, Product newProduct, MultipartFile multipartFile) throws IOException {
 		oldProduct.setCost(newProduct.getCost());
 		oldProduct.setName(newProduct.getName());
-		oldProduct.setText(newProduct.getText());
-		if(!multipartFile.isEmpty())		//меняем фото
+		oldProduct.setDescription(newProduct.getDescription());
+		if(!multipartFile.isEmpty())	//меняем фото
 		{
-			Files.delete((new File(uploadDir+oldProduct.getPhoto_url())).toPath());
-			oldProduct.setPhoto_url(multipartFile.getOriginalFilename());
+			Files.delete((new File(uploadDir+oldProduct.getPhotoUrl())).toPath());
+			oldProduct.setPhotoUrl(multipartFile.getOriginalFilename());
 			multipartFile.transferTo((new File(uploadDir+multipartFile.getOriginalFilename()).toPath()));
 		}
 		
 		productDAO.editProduct(oldProduct);
 		
+	}
+	
+	private String definiteCategory;		//нужно для создания product
+	
+	public void setDefiniteCategory(String category) {
+		definiteCategory = category;
+	}
+	
+	public String getDefiniteCategory(){
+		String tmpCategory = definiteCategory;
+		definiteCategory = null;
+		return tmpCategory;
 	}
 }

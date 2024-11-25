@@ -31,10 +31,10 @@
 		<div class="column">
 			<tr th:each ="element : ${ListOfDefiniteCategory}">
 				<div class="setk">
-					<img th:src="@{${'/img/dishes/'+element.photo_url}}" alt=""/><br>
+					<img th:src="@{${'/img/dishes/'+element.photoUrl}}" alt=""/><br>
 					
 					<b><td th:text = "${element.name}" ></td><br></b>
-					<td th:text = "${element.text}" ></td><br>
+					<td th:text = "${element.description}" ></td><br>
 					<b><td th:text = "${element.cost} +'&#8381;'" ></td><br></b>
 				</div>	
 				

@@ -2,56 +2,81 @@ package com.example.repositories;
 
 import java.util.List;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.example.models.ProductModel;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.entities.Product;
+import com.example.entities.Type;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
+
+@Transactional
 @Repository
 public class ProductDAO {
-	private final JdbcTemplate jdbcTemplate;
 	
-	public ProductDAO(JdbcTemplate jdbcTemplate)
+    @PersistenceContext
+	private EntityManager entityManager;
+	
+	public List<Product> getDefiniteProducts(String category)
 	{
-		this.jdbcTemplate=jdbcTemplate;
+		List<Product> products = null;
+		
+		try(Session session = entityManager.unwrap(Session.class)){
+			Type type = session.createQuery("from Type where category = :category",Type.class)
+					.setParameter("category", category)
+					.getSingleResult();
+			products = type.getProducts();
+			return products;		
+		}
 	}
 
-	public List<ProductModel> getListOfAllProducts() {
-		return jdbcTemplate.query("SELECT * FROM Product", new ProductMapper());
+	
+	public void deleteProduct(Product product) {
+		try(Session session = entityManager.unwrap(Session.class)){
+			Product product1 = session.get(Product.class, product.getId());
+			session.remove(product1);
+		}
 		
 	}
-	
-	public Integer maxId()
-	{
-		return jdbcTemplate.queryForObject("SELECT MAX(pId) FROM Product", Integer.class);
-	}
-	public void saveProductToDB(ProductModel productModel) {
-	    jdbcTemplate.update("INSERT INTO Product VALUES(?,?,?,?,?,?)", 
-	    	productModel.getId(),
-	    	productModel.getCost(),
-	    	productModel.getFk_TypeOf_Id(),
-	    	productModel.getText(),
-	    	productModel.getPhoto_url(),
-	    	productModel.getName());
-	}
 
-	public void deleteProduct(ProductModel productModel) {
-		jdbcTemplate.update("DELETE FROM Product WHERE pId=?", productModel.getId());
-	}
 	
-	public String getPhoto_urlFromId(ProductModel productModel)
-	{
-		return jdbcTemplate.queryForObject("SELECT pPhoto_url FROM Product WHERE pId=?", String.class, productModel.getId());
-	}
-	
-	public ProductModel getProductWithId(Integer id)
-	{
-		return jdbcTemplate.queryForObject("SELECT * FROM Product WHERE pId=?", new ProductMapper(), id);
-	}
-
-	public void editProduct(ProductModel oldProduct) {
-		String sql = "UPDATE Product SET pName = ?, pPhoto_url = ?, pText = ?, pCost = ? WHERE pId = ?";
-		jdbcTemplate.update(sql,oldProduct.getName(),oldProduct.getPhoto_url(),oldProduct.getText(),oldProduct.getCost(),oldProduct.getId());
+	public Product getProductById(Integer id) {
+		
+		try(Session session = entityManager.unwrap(Session.class)){
+			Product product1 = session.get(Product.class,id);
+			return product1;		
+		}
 		
 	}
+
+
+	public void editProduct(Product product) {
+		try(Session session = entityManager.unwrap(Session.class)){
+			Product product1 = session.get(Product.class, product.getId());
+			product1.setCost(product.getCost());
+			product1.setDescription(product.getDescription());
+			product1.setName(product.getName());
+			product1.setPhotoUrl(product.getPhotoUrl());
+		}
+		
+	}
+
+	
+	public void saveProduct(Product product, String definiteCategory) {
+		try(Session session = entityManager.unwrap(Session.class)){
+			Type type = session.createQuery("from Type where category = :category",Type.class)
+					.setParameter("category", definiteCategory)
+					.getSingleResult();
+			type.addProductToType(product);
+			session.persist(type);
+		}
+	}
+	
+	
+	
 	
 }

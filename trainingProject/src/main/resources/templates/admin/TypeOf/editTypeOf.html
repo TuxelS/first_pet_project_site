@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>editTypeOf</title>
+    <title>editProduct</title>
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
 
     <style>
@@ -24,6 +24,7 @@
             flex-direction: column; /* Располагаем элементы по вертикали */
             justify-content: center; /* Центрируем содержимое по вертикали */
             align-items: center; /* Центрируем содержимое по горизонтали */
+    		
         }
 
         form {
@@ -37,6 +38,7 @@
             margin: 10px 0; /* Отступы сверху и снизу */
             border-radius: 10px; /* Округленные края */
             text-align: center;
+
         }
 
         input[type="submit"] {
@@ -48,43 +50,45 @@
             font-weight: bold; 
             cursor:pointer;
         }
-        
-        select{
-	        width: 200px; /* Ширина элемента */
-	    	height: 40px; /* Высота элемента */
-	   		border: 2px solid black; /* Черная рамка */
-	    	border-radius: 20px; /* Закругленные углы */
-	    	padding: 5px; /* Отступы внутри элемента */
-	    	font-size: 16px; /* Размер шрифта */
-	    	background-color: white; /* Цвет фона */
-	    	text-align: center;
-        }
-        option{
-        	padding: 10px; /* Отступы внутри опций */
-    		font-size: 16px; /* Размер шрифта опций */
-    		font-weight: bold; 
-    		text-align: center;
-        }
-        
+        input[type=file]::file-selector-button {
+		    margin-right: 20px;
+		    border: none;
+		    background: #084cdf; /* Основной цвет фона */
+		    padding: 12px 24px; /* Увеличенные отступы для лучшего восприятия */
+		    border-radius: 10px; /* Скругленные углы */
+		    color: #fff; /* Цвет текста */
+		    font-size: 16px; /* Увеличенный размер шрифта */
+		    cursor: pointer; /* Указатель для курсора */
+		    transition: background 0.2s ease-in-out, transform 0.2s; /* Плавный переход для фона и эффекта нажатия */
+		}
+		
+		input[type=file]::file-selector-button:hover {
+		    background: #0d45a5; /* Более темный синий при наведении */
+		    transform: translateY(-2px); /* Легкий подъем кнопки при наведении */
+		}
+		
+		input[type=file]::file-selector-button:active {
+		    transform: translateY(0); /* Возврат кнопки в исходное положение при нажатии */
+		}
+		
     </style>
 </head>
 <body>
     <div class="square">
-        <form th:method="PATCH" th:action="@{/admin/TypeOf/edit}" th:object="${TypeOfModel}">
-            <label><h2>Select the category</h2></label>
-            <select th:field="*{id}">
-            	<option th:each="element : ${allList}" th:value="${element.getId()}" th:text="${element.getCategory()}"></option>
-            </select>
+        <form th:method="PATCH" th:action="@{/admin/TypeOf/editType}" th:object="${Type}">
+           	<h2><label th:text="'edit '+${Type.name}"></label></h2>
+            <label>name</label>
+            <input type="hidden" th:field="*{id}" />
+            <input type="text" th:field="*{name}"/>
             <br>
-            <label> <h2>Input the right name of category</h2></label>
+            <label>category </label>
+           
             <input type="text" th:field="*{category}"/>
             <br>
-            <input type="submit" value="edit"/>
+            <input type="submit" value="EDIT"/>
+            <br>
         </form>
         <br>
-        <form th:action="@{/admin}">
-   			<input type="submit" value="back" />
-		</form>
         
     </div>
 </body>

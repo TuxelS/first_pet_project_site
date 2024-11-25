@@ -72,9 +72,9 @@
 	            			
 	               				 <div class = "elem" th:each="product : ${entry.value}">
 	               				 
-	               				 	<img th:src="@{${'/img/dishes/'+product.photo_url}}" alt=""/>
+	               				 	<img th:src="@{${'/img/dishes/'+product.photoUrl}}" alt=""/>
 	                    			<b><div class="name" th:text="${product.name}"></div></b>
-	                    			<div class = "text" th:text="${product.text}"></div> 
+	                    			<div class = "text" th:text="${product.description}"></div> 
 	                    			<b><div class="cost" th:text="${product.cost}+' &#8381;'"></div></b>
 	                    			
 	                			</div>

@@ -54,12 +54,12 @@
 </head>
 <body>
     <div class="square">
-        <form th:method="POST" th:action="@{/admin/TypeOf/create}" th:object="${TypeOfModel}">
+        <form th:method="POST" th:action="@{/admin/TypeOf/create}" th:object="${Type}">
             <label for="category"><h2>Write a new category</h2></label>
            
             <input type="text" th:field="*{category}" id="category" required/>
             <br>
-            <label for="category"><h2>Write a new name</h2></label>
+            <label for="name"><h2>Write a new name</h2></label>
             <input type="text" th:field="*{name}" id="name" required/>
             <br>
             <input type="submit" value="create"/>
