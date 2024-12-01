@@ -10,41 +10,39 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Products")
 public class Product {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-	
+
 	@Column(name = "cost")
 	private String cost;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "photo_url")
 	private String photoUrl;
-	
+
 	@Column(name = "name")
 	private String name;
-	
-	
-	public Product() {}
-	
-	public Product(String cost, String description, String photoUrl, String name){
+
+	public Product() {
+	}
+
+	public Product(String cost, String description, String photoUrl, String name) {
 		this.cost = cost;
 		this.description = description;
 		this.photoUrl = photoUrl;
 		this.name = name;
 	}
 
-	
-	
 	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Integer id) { // используется только для формы thymeleaf в hidden формате
 		this.id = id;
 	}
 
@@ -82,9 +80,9 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", cost=" + cost + ", description=" + description + ", photoUrl=" + photoUrl
-				+ ", name=" + name + "]";
+		String message = String.format("Product [id=%d, cost=%s, description=%s, photoUrl=%s, name=%s] ", id, cost,
+				description, photoUrl, name);
+		return message;
 	}
-	
 
 }

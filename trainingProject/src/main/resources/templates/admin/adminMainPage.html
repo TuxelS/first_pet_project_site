@@ -4,37 +4,50 @@
 
 <meta charset="UTF-8">
 <title>PizzaFabrics_Admin</title>
-<link th:href="@{/css/main.css}" rel="stylesheet"/>
+<link th:href="@{/css/main.css}" rel="stylesheet" />
 
-	<style>
-		body{
-			background: linear-gradient(to left, #FFE4E1 82%, pink 18%);
-    		height: 100%;}
-	</style>
-	
+<style>
+body {
+	background: linear-gradient(to left, #FFE4E1 82%, pink 18%);
+	height: 100%;
+}
+</style>
+
 </head>
 <body>
-	
+
 	<div class="wrapper">
 		<div class="light">
-			<div> <a th:href ="@{/admin}" th:text = "HomePage" ></a></div>
-			<tr th:each ="element : ${ListOfType}">
-			<div class="divmargin">
-				<a th:href ="@{admin/{category}(category=${element.category})}" th:text = "${element.name}" ></a>
-			</div>	
+			<div>
+				<a th:href="@{/admin}" th:text="HomePage"></a>
+			</div>
+			<div>
+				<a th:href="@{/logout}" th:text="Logout"></a>
+			</div>
+			<tr th:each="element : ${listOfType}">
+				<div class="divmargin">
+					<a th:href="@{admin/{category}(category=${element.category})}"
+						th:text="${element.name}"></a>
+				</div>
 			</tr>
 		</div>
 		<div class="custom-button">
-		
-			<div class="oneSetting"><a th:href ="@{/admin/TypeOf/createNewTypeOf}" th:text = "add" ></a></div>
-			<div class="oneSetting"><a th:href ="@{/admin/TypeOf/editTypeOf}" th:text = "edit" ></a></div>
-			<div class="oneSetting"><a th:href ="@{/admin/TypeOf/deleteTypeOf}" th:text = "delete" ></a></div>
+
+			<div class="oneSetting">
+				<a th:href="@{/admin/TypeOf/createNewTypeOf}" th:text="add"></a>
+			</div>
+			<div class="oneSetting">
+				<a th:href="@{/admin/TypeOf/editTypeOf}" th:text="edit"></a>
+			</div>
+			<div class="oneSetting">
+				<a th:href="@{/admin/TypeOf/deleteTypeOf}" th:text="delete"></a>
+			</div>
 		</div>
-		
-		
+
+
 	</div>
-	
-	
+
+
 
 </body>
 </html>

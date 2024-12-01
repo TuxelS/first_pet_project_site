@@ -4,73 +4,81 @@
 
 <meta charset="UTF-8">
 <title>TASTE CORNER</title>
- <link rel="icon" href="/img/iconImg.png" type="image/png">
-<link th:href="@{/css/NewMainPage.css}" rel="stylesheet"/>
+<link rel="icon" href="/img/iconImg.png" type="image/png">
+<link th:href="@{/css/NewMainPage.css}" rel="stylesheet" />
 </head>
 <body>
-	
+
 	<header>
 		<div class="left-side">
-			<a href="https://yandex.ru/maps/16/yaroslavl/?l=sat%2Cskl&ll=39.850769%2C57.637314&mode=poi&poi%5Bpoint%5D=39.850575%2C57.637336&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D135143368090&z=18">
-				<img src = "/img/placeholder1.png" alt =""/>
-				<div class="text">
-					Ярославль
-				</div>
+			<a
+				href="https://yandex.ru/maps/16/yaroslavl/?l=sat%2Cskl&ll=39.850769%2C57.637314&mode=poi&poi%5Bpoint%5D=39.850575%2C57.637336&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D135143368090&z=18">
+				<img src="/img/placeholder1.png" alt="" />
+				<div class="text">Ярославль</div>
 			</a>
-			
-			<div class="text">
-				&#9990
-				8-800-555-35-35
-			</div>
+
+			<div class="text">&#9990 8-800-555-35-35</div>
 		</div>
-		
-		
+
+
 		<div class="right-side">
-			<div class="text"> TASTE CORNER </div>
+			<div class="text">TASTE CORNER</div>
 			<ul>
-				<li>
-					<a th:href = "@{/fabric}">
-					<img src="/img/mainIcon.png" alt="" />
+				<li><a th:href="@{/fabric}"> <img src="/img/mainIcon.png"
+						alt="" />
 						<ul>
-							<li><a th:href = "@{/fabric}">Домой</a> </li>
-							<li><a th:href="@{/fabric/menu}">Меню</a> </li>
+							<li><a th:href="@{/fabric}">Домой</a></li>
+							<li><a th:href="@{/fabric/menu}">Меню</a></li>
 						</ul>
-					</a>
-				</li>
+				</a></li>
 			</ul>
 		</div>
-		
+
 	</header>
-	
-		<section>
-			<div class="container">
-				<div class="left-bar"></div>
-				<div class="middle-bar">
-					<div class="block">
-						<div class="element"> <img src="/img/mainPage/first.jpg" alt =""/> </div>
-						<div class="element"> <img src="/img/mainPage/second.jpg" alt =""/> </div>
-						<div class="element"> <img src="/img/mainPage/third.jpg" alt =""/> </div>
+
+	<section>
+		<div class="container">
+			<div class="left-bar"></div>
+			<div class="middle-bar">
+				<div class="block">
+					<div class="element">
+						<img src="/img/mainPage/first.jpg" alt="" />
+					</div>
+					<div class="element">
+						<img src="/img/mainPage/second.jpg" alt="" />
+					</div>
+					<div class="element">
+						<img src="/img/mainPage/third.jpg" alt="" />
 					</div>
 				</div>
-				<div class="right-bar"></div>
-				
 			</div>
-			<div class="emptyArea">
+			<div class="right-bar"></div>
+
+		</div>
+		<div class="emptyArea">
 			<p>Уголок вкуса</p>
+		</div>
+		<div class="container">
+			<div class="textBlock">
+				<p>Добро пожаловать в наше стрит-фуд кафе, где каждый найдет
+					что-то по своему вкусу! Мы предлагаем уникальное сочетание
+					традиционных и современных блюд, приготовленных с любовью и
+					вниманием к деталям. Наша концепция основана на идее, что уличная
+					еда может быть не только вкусной, но и изысканной.</p>
+				<p>В нашем меню вы найдете разнообразные закуски, сэндвичи и
+					блюда, вдохновленные кулинарными традициями со всего мира. Мы
+					используем только свежие и качественные ингредиенты, чтобы каждый
+					укус приносил удовольствие. От ароматных бургеров до острых тако —
+					каждое блюдо создано для того, чтобы удивить и порадовать.</p>
+				<p>Приходите к нам, чтобы открыть для себя мир стрит-фуда в
+					новом свете! Мы уверены, что ваше время, проведенное у нас, станет
+					незабываемым.</p>
 			</div>
-			<div class="container">
-				<div class="textBlock">
-					<p>Добро пожаловать в наше стрит-фуд кафе, где каждый найдет что-то по своему вкусу! Мы предлагаем уникальное сочетание традиционных и современных блюд, приготовленных с любовью и вниманием к деталям. Наша концепция основана на идее, что уличная еда может быть не только вкусной, но и изысканной.</p>
-					<p>В нашем меню вы найдете разнообразные закуски, сэндвичи и блюда, вдохновленные кулинарными традициями со всего мира. Мы используем только свежие и качественные ингредиенты, чтобы каждый укус приносил удовольствие. От ароматных бургеров до острых тако — каждое блюдо создано для того, чтобы удивить и порадовать.</p>
-					<p>Приходите к нам, чтобы открыть для себя мир стрит-фуда в новом свете! Мы уверены, что ваше время, проведенное у нас, станет незабываемым.</p>
-				</div>
-			</div>
-			
-		</section>
-	
-	<footer>
-	
-	</footer>
+		</div>
+
+	</section>
+
+	<footer> </footer>
 
 </body>
 </html>

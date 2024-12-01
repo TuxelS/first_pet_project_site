@@ -4,44 +4,45 @@
 
 <meta charset="UTF-8">
 <title th:text=${param.category}></title>
-<link th:href="@{/css/main.css}" rel="stylesheet"/>
-	<style>
-		body{
-		background: linear-gradient(to left, #FFE4E1 82%, pink 18%);
-    	height: 100%;}
-    	
-    	
-	</style>
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<style>
+body {
+	background: linear-gradient(to left, #FFE4E1 82%, pink 18%);
+	height: 100%;
+}
+</style>
 
 </head>
 <body>
 	<div class="wrapper">
-		<div class="light" >
-			<a th:href ="@{/admin}" th:text = "HomePage" ></a>
+		<div class="light">
+			<a th:href="@{/admin}" th:text="HomePage"></a>
 			<div class="window">
-				<br>
-				<a th:href ="@{/admin/{category}/createNewProduct(category=${category})}" th:text = "add" ></a>
-				<br>
-				<a th:href ="@{/admin/{category}/editProduct(category=${category})}" th:text = "edit" ></a>
-				<br>
-				<a th:href ="@{/admin/{category}/deleteProduct(category=${category})}" th:text = "delete" ></a>
-				<br>
+				<br> <a
+					th:href="@{/admin/{category}/createNewProduct(category=${category})}"
+					th:text="add"></a> <br> <a
+					th:href="@{/admin/{category}/editProduct(category=${category})}"
+					th:text="edit"></a> <br> <a
+					th:href="@{/admin/{category}/deleteProduct(category=${category})}"
+					th:text="delete"></a> <br>
 			</div>
 		</div>
 		<div class="column">
-			<tr th:each ="element : ${ListOfDefiniteCategory}">
+			<tr th:each="element : ${listOfDefiniteCategory}">
 				<div class="setk">
-					<img th:src="@{${'/img/dishes/'+element.photoUrl}}" alt=""/><br>
-					
-					<b><td th:text = "${element.name}" ></td><br></b>
-					<td th:text = "${element.description}" ></td><br>
-					<b><td th:text = "${element.cost} +'&#8381;'" ></td><br></b>
-				</div>	
-				
+					<img th:src="@{${'/img/dishes/'+element.photoUrl}}" alt="" /><br>
+
+					<b><td th:text="${element.name}"></td>
+					<br></b>
+					<td th:text="${element.description}"></td>
+					<br> <b><td th:text="${element.cost} +'&#8381;'"></td>
+					<br></b>
+				</div>
+
 			</tr>
-			
+
 		</div>
-			
+
 	</div>
 </body>
 </html>
