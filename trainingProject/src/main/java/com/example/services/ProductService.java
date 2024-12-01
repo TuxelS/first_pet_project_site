@@ -28,15 +28,16 @@ public class ProductService {
 	}
 
 	public List<Product> getProductsByCategory(String category) {
-		Type type = typeRepository.findByCategory(category);
-		return type.getProducts();
+		Type typeFromRepo = typeRepository.findByCategory(category);
+		return typeFromRepo.getProducts();
 	}
-
-	public void delete(Product product) { // нюанс в том, что передаем только id, остальные значения = null
+	
+	// нюанс в том, что передаем только id, остальные значения = null
+	public void delete(Product product) { 
 		try {
-			Product product1 = productRepository.findById(product.getId());
-			Files.deleteIfExists((new File(uploadDir + product1.getPhotoUrl())).toPath());
-			productRepository.delete(product1);
+			Product productFromRepo = productRepository.findById(product.getId());
+			Files.deleteIfExists((new File(uploadDir + productFromRepo.getPhotoUrl())).toPath());
+			productRepository.delete(productFromRepo);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -66,24 +67,25 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		// сохраняем в бд
-		Type type = typeRepository.findByCategory(category);
-		type.addProductToType(product);
+		Type typeFromRepo = typeRepository.findByCategory(category);
+		typeFromRepo.addProductToType(product);
 		productRepository.save(product);
-		typeRepository.save(type);
+		typeRepository.save(typeFromRepo);
 	}
 
 	public void update(Product product, MultipartFile multipartFile) throws IOException {
-		Product product2 = productRepository.findById(product.getId());
-		product2.setCost(product.getCost());
-		product2.setDescription(product.getDescription());
-		product2.setName(product.getName());
-		if (!multipartFile.isEmpty()) // меняем фото
+		Product productFromRepo = productRepository.findById(product.getId());
+		productFromRepo.setCost(product.getCost());
+		productFromRepo.setDescription(product.getDescription());
+		productFromRepo.setName(product.getName());
+		// меняем фото
+		if (!multipartFile.isEmpty()) 
 		{
 			Files.delete((new File(uploadDir + product.getPhotoUrl())).toPath());
-			product2.setPhotoUrl(multipartFile.getOriginalFilename());
+			productFromRepo.setPhotoUrl(multipartFile.getOriginalFilename());
 			multipartFile.transferTo((new File(uploadDir + multipartFile.getOriginalFilename()).toPath()));
 		}
-		productRepository.save(product2);
+		productRepository.save(productFromRepo);
 	}
 
 	public Product getProductById(Integer id) {

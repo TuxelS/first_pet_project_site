@@ -37,9 +37,10 @@ public class AdminController {
 		model.addAttribute("category", category);
 		return "admin/adminMenuOfCategory";
 	}
-
+	
+	// просто список категорий
 	@GetMapping("")
-	public String adminMainPage(Model model) { // просто список категорий
+	public String adminMainPage(Model model) { 
 		model.addAttribute("listOfType", typeService.allList());
 		return "admin/adminMainPage";
 	}
@@ -78,7 +79,7 @@ public class AdminController {
 	@GetMapping("/TypeOf/deleteTypeOf")
 	public String deleteTypeOf(Model model) {
 		model.addAttribute("type", new Type());
-		model.addAttribute("allList", typeService.allList()); // доработать удаление всех фоток в категории
+		model.addAttribute("allList", typeService.allList()); 
 		return "admin/TypeOf/deleteTypeOf";
 	}
 

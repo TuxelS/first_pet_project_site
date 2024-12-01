@@ -41,8 +41,9 @@ public class Product {
 	public Integer getId() {
 		return id;
 	}
-
-	public void setId(Integer id) { // используется только для формы thymeleaf в hidden формате
+	
+	// используется только для формы thymeleaf 
+	public void setId(Integer id) { 
 		this.id = id;
 	}
 

@@ -27,22 +27,23 @@ public class TypeService {
 	}
 
 	public void update(Type type) {
-		Type type1 = typeRepository.findById(type.getId());
-		type1.setName(type.getName());
-		type1.setCategory(type.getCategory());
-		typeRepository.save(type1);
+		Type typeFromRepo = typeRepository.findById(type.getId());
+		typeFromRepo.setName(type.getName());
+		typeFromRepo.setCategory(type.getCategory());
+		typeRepository.save(typeFromRepo);
 	}
 
-	public void delete(Type type) { // здесь тоже нюанс, что в type не null только id
-		Type type1 = typeRepository.findById(type.getId());
-		type1.getProducts().stream().forEach(product -> {
+	// здесь тоже нюанс, что в type не null только id
+	public void delete(Type type) { 
+		Type typeFromRepo = typeRepository.findById(type.getId());
+		typeFromRepo.getProducts().stream().forEach(product -> {
 			try {
 				Files.deleteIfExists((new File(uploadDir + product.getPhotoUrl())).toPath());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		});
-		typeRepository.delete(type1);
+		typeRepository.delete(typeFromRepo);
 	}
 
 	public List<Type> allList() {

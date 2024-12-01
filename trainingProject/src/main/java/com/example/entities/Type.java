@@ -28,10 +28,12 @@ public class Type {
 
 	@Column(name = "name")
 	private String name;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) // lazy - чтобы getProducts только по запросу искали в
-																	// БД
-	@JoinColumn(name = "type_id", nullable = false) // ссылается на поле в target таблице
+	
+	// lazy - чтобы getProducts только по запросу искали в БД
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
+													
+	// ссылается на поле в target таблице
+	@JoinColumn(name = "type_id", nullable = false) 
 	private List<Product> products;
 
 	public Type() {
@@ -49,7 +51,6 @@ public class Type {
 	}
 
 	// геттеры и сеттеры используются для thymeleaf
-
 	public List<Product> getProducts() {
 		return products;
 	}
