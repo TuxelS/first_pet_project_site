@@ -1,7 +1,5 @@
 package com.example;
 
-import java.time.LocalDateTime;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,11 +15,11 @@ public class LoggingAspect {
 	
 	@Before("execution(* com.example.controllers..*(..)) || execution(* com.example.services..*(..))")
 	public void beforeAdvice(JoinPoint joinPoint) {
-		logger.info(" {} Вызван метод: {}", LocalDateTime.now() ,joinPoint.getSignature());
+		logger.info("Вызван метод: {}",joinPoint.getSignature());
 	}
 	
 	@After("execution(* com.example.controllers..*(..)) || execution(* com.example.services..*(..))")
 	public void afterAdvice(JoinPoint joinPoint) {
-		logger.info(" {} Метод выполнен: {}", LocalDateTime.now() ,joinPoint.getSignature());
+		logger.info("Метод выполнен: {}",joinPoint.getSignature());
 	}
 }
