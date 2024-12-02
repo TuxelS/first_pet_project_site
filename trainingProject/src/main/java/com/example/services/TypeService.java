@@ -34,13 +34,13 @@ public class TypeService {
 	}
 
 	// здесь тоже нюанс, что в type не null только id
-	public void delete(Type type) { 
+	public void delete(Type type) {
 		Type typeFromRepo = typeRepository.findById(type.getId());
 		typeFromRepo.getProducts().stream().forEach(product -> {
 			try {
 				Files.deleteIfExists((new File(uploadDir + product.getPhotoUrl())).toPath());
 			} catch (IOException e) {
-				e.printStackTrace();
+				// прописано в LoggingAspect
 			}
 		});
 		typeRepository.delete(typeFromRepo);

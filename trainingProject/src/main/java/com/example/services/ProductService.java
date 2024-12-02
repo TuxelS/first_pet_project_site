@@ -31,15 +31,15 @@ public class ProductService {
 		Type typeFromRepo = typeRepository.findByCategory(category);
 		return typeFromRepo.getProducts();
 	}
-	
+
 	// нюанс в том, что передаем только id, остальные значения = null
-	public void delete(Product product) { 
+	public void delete(Product product) {
 		try {
 			Product productFromRepo = productRepository.findById(product.getId());
 			Files.deleteIfExists((new File(uploadDir + productFromRepo.getPhotoUrl())).toPath());
 			productRepository.delete(productFromRepo);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// прописано в LoggingAspect
 		}
 	}
 
@@ -48,10 +48,13 @@ public class ProductService {
 		File directory = new File(uploadDir);
 		// Создаем директорию, если она не существует
 		if (!directory.exists()) {
-			boolean created = directory.mkdirs();
-			if (!created) {
-				System.err.println("Не удалось создать директорию: " + uploadDir);
-				return;
+			try {
+				boolean created = directory.mkdirs();
+				if (!created) {
+
+					throw new IOException("Директорию не получилось создать");
+				}
+			} catch (IOException e) {	
 			}
 		}
 		// Сохраняем файл
@@ -60,11 +63,9 @@ public class ProductService {
 			multipartFile.transferTo(imageFile.toPath());
 			product.setPhotoUrl(multipartFile.getOriginalFilename());
 		} catch (IllegalStateException e) {
-			System.err.println("IllegalStateException: " + e.getMessage());
-			e.printStackTrace();
+			// прописано в LoggingAspect
 		} catch (IOException e) {
-			System.err.println("IOException: " + e.getMessage());
-			e.printStackTrace();
+			// прописано в LoggingAspect
 		}
 		// сохраняем в бд
 		Type typeFromRepo = typeRepository.findByCategory(category);
@@ -79,8 +80,7 @@ public class ProductService {
 		productFromRepo.setDescription(product.getDescription());
 		productFromRepo.setName(product.getName());
 		// меняем фото
-		if (!multipartFile.isEmpty()) 
-		{
+		if (!multipartFile.isEmpty()) {
 			Files.delete((new File(uploadDir + product.getPhotoUrl())).toPath());
 			productFromRepo.setPhotoUrl(multipartFile.getOriginalFilename());
 			multipartFile.transferTo((new File(uploadDir + multipartFile.getOriginalFilename()).toPath()));
