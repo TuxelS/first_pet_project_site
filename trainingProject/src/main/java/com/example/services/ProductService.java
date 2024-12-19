@@ -54,7 +54,7 @@ public class ProductService {
 
 					throw new IOException("Директорию не получилось создать");
 				}
-			} catch (IOException e) {	
+			} catch (IOException e) {
 			}
 		}
 		// Сохраняем файл
@@ -81,9 +81,12 @@ public class ProductService {
 		productFromRepo.setName(product.getName());
 		// меняем фото
 		if (!multipartFile.isEmpty()) {
-			Files.delete((new File(uploadDir + product.getPhotoUrl())).toPath());
+			Files.delete((new File(uploadDir + productFromRepo.getPhotoUrl())).toPath());
 			productFromRepo.setPhotoUrl(multipartFile.getOriginalFilename());
-			multipartFile.transferTo((new File(uploadDir + multipartFile.getOriginalFilename()).toPath()));
+			File file = new File(uploadDir + multipartFile.getOriginalFilename());
+			if (!file.exists()) {
+				multipartFile.transferTo(file.toPath());
+			}
 		}
 		productRepository.save(productFromRepo);
 	}
