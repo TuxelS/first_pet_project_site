@@ -8,3 +8,6 @@
 Первый коммит - через классы DAO с прямыми sql запросами через JdbcTemplate.</br>
 Второй коммит - через классы DAO с ORM подходом через EntityManager используя Session(hibernate)</br>
 И третья версия(актуальный коммит) - реализация работы с postgre sql через интерфейсы JPA Repository, также добавлено логирование через Spring Boot AOP, также добавлено Spring Boot Security(о котором говорилось ранее).
+
+вот ссылка на обзор проекта на youtube
+https://youtu.be/XgoxR7EjgLA
