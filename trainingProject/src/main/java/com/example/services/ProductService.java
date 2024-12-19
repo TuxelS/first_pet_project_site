@@ -36,7 +36,10 @@ public class ProductService {
 	public void delete(Product product) {
 		try {
 			Product productFromRepo = productRepository.findById(product.getId());
-			Files.deleteIfExists((new File(uploadDir + productFromRepo.getPhotoUrl())).toPath());
+			List<Product> productsWithSamePhoto = productRepository.findByPhotoUrl(productFromRepo.getPhotoUrl());
+			if(!(productsWithSamePhoto.size()>1)){
+				Files.deleteIfExists((new File(uploadDir + productFromRepo.getPhotoUrl())).toPath());
+			}
 			productRepository.delete(productFromRepo);
 		} catch (IOException e) {
 			// прописано в LoggingAspect
@@ -81,7 +84,7 @@ public class ProductService {
 		productFromRepo.setName(product.getName());
 		// меняем фото
 		if (!multipartFile.isEmpty()) {
-			Files.delete((new File(uploadDir + productFromRepo.getPhotoUrl())).toPath());
+			Files.deleteIfExists((new File(uploadDir + productFromRepo.getPhotoUrl())).toPath());
 			productFromRepo.setPhotoUrl(multipartFile.getOriginalFilename());
 			File file = new File(uploadDir + multipartFile.getOriginalFilename());
 			if (!file.exists()) {
